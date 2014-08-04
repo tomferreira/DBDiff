@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  verification_from: 
+  verification_to: 
+  result: 1
+  structures_diff_html: MyText
+  tables_diff: MyText
+
+two:
+  verification_from: 
+  verification_to: 
+  result: 1
+  structures_diff_html: MyText
+  tables_diff: MyText

@@ -1,0 +1,102 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', root_path %></a></li>
+  <li class="active">Comparison</li>
+</ol>
+
+<style>
+<%= Diffy::CSS %>
+
+.diff li.diff-block-info {
+  background-color: #f8f8ff !important;
+}
+</style>
+
+<p>Verification <%= link_to @comparison.verification_from.id, verification_path(@comparison.verification_from) %> <i>(<%= @comparison.verification_from.database %>, <%= I18n.l @comparison.verification_from.date, :format => :long %>)</i> 
+&#8594; 
+Verification <%= link_to @comparison.verification_to.id, verification_path(@comparison.verification_to) %> <i>(<%= @comparison.verification_to.database %>, <%= I18n.l @comparison.verification_to.date, :format => :long %>)</i></p>
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#structure" data-toggle="tab">Structure</a></li>
+  <li><a href="#datas" data-toggle="tab">Datas</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="tab-pane active" id="structure">
+
+    <ul class="nav nav-pills">
+      <% @structures_diff.each_with_index do |diff, index| %>
+        <li class="<%= index == 0 ? 'active' : '' %>"><%= link_to diff[0], "#schema-#{diff[0]}", :'data-toggle' => "tab" %></li>
+      <% end %>
+    </ul>
+
+    <div id="schemas" class="tab-content">
+
+      <% @structures_diff.each_with_index do |diff, index| %>
+
+      <div class="tab-pane <%= index == 0 ? 'active' : '' %>" id="schema-<%= diff[0] %>">
+        <%=raw diff[1] %>
+      </div>
+
+      <% end %>
+
+    </div>
+
+
+  </div>
+
+  <div class="tab-pane" id="datas">
+
+    <div class="row">
+
+      <div class="col-md-2">
+
+        <div class="list-group" id="sidebar">
+          <% @tables_diff.each do |table_data| %>
+            <%= link_to table_data[:table_name], "##{table_data[:table_name]}", :class => "list-group-item" %> 
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="col-md-10">
+
+        <% @tables_diff.each do |table_data| %>
+
+        <h1 id="<%= table_data[:table_name] %>"><%= table_data[:table_name] %></h1>
+
+          <!-- Table -->
+          <div class="table-responsive">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <% table_data[:columns].each do |column| %>
+                    <th><%= column %></th>
+                  <% end %>
+                </tr>
+              </thead>
+
+              <tbody>
+
+              <% table_data[:rows].each do |row| %>
+                <tr class="<%= row.inserted? ? 'rowinserted' : row.deleted? ? 'rowdeleted' : 'rowmodified' %>">
+                  <% row.data.each do |cell| %>
+                    <td><%= raw cell %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+ 
+              </tbody>
+
+            </table>
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

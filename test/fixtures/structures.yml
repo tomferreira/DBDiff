@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  dump_filename: MyString
+  schema: MyString
+  verification: 
+
+two:
+  dump_filename: MyString
+  schema: MyString
+  verification: 

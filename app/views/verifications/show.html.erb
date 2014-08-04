@@ -1,0 +1,95 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', root_path %></a></li>
+  <li><%= link_to 'History', histories_path %></li>
+  <li><%= link_to @database['name'], history_path( @database['database'] ) %></li>
+  <li class="active">Verification <%= @verification.id %></li>
+</ol>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#structure" data-toggle="tab">Structure</a></li>
+  <li><a href="#datas" data-toggle="tab">Datas</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="tab-pane active" id="structure">
+
+    <ul class="nav nav-pills">
+      <% @verification.structures.each_with_index do |structure, index| %>
+        <li class="<%= index == 0 ? 'active' : '' %>"><%= link_to structure.schema, "#schema-#{structure.schema}", :'data-toggle' => "tab" %></li>
+      <% end %>
+    </ul>
+
+    <div id="schemas" class="tab-content">
+
+      <% @verification.structures.each_with_index do |structure, index| %>
+      <% body_info = structure.body_info %>
+
+      <div class="tab-pane <%= index == 0 ? 'active' : '' %>" id="schema-<%= structure.schema %>">
+        <% if body_info.success %>
+          <pre><%= raw body_info.body %></pre>
+        <% else %>
+          <div class="alert alert-danger"><%= body_info.message %></div>
+        <% end %>
+      </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+  <div class="tab-pane" id="datas">
+
+    <div class="row">
+
+      <div class="col-md-2">
+
+         <div class="list-group" id="sidebar">
+          <% @verification.table_data_versions.each do |table_data| %>
+            <%= link_to table_data.table, "##{table_data.table}", :class => "list-group-item" %> 
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="col-md-10">
+
+        <% @verification.table_data_versions.each do |table_data| %>
+        
+        <h2 id="<%= table_data.table %>"><%= table_data.table %></h2>
+
+          <!-- Table -->
+          <div class="table-responsive">
+            <table class="table table-striped table-hover table-condensed">
+              <thead>
+                <tr>
+                  <% table_data.records.columns.each do |column| %>
+                    <th><%= column %></th>
+                  <% end %>
+                </tr>
+              </thead>
+
+              <tbody>
+
+              <% table_data.records.rows.each do |row| %>
+                <tr>
+                  <% row.each do |cell| %>
+                    <td><%= cell %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+ 
+              </tbody>
+
+            </table>
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

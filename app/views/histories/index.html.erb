@@ -1,0 +1,24 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', root_path %></a></li>
+  <li class="active">History</li>
+</ol>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Databases</div>
+
+  <div class="list-group">
+
+    <% @databases.each do |database| %>
+
+    <a href="<%= history_path( database['database'] ) %>" class="list-group-item">
+      <span class="badge"><%= Verification.where( :database => database['database'] ).count %></span>
+      <h4 class="list-group-item-heading"><%= database['name'] %></h4>
+      <p class="list-group-item-text"><%= database['database'] %></p>
+    </a>
+
+    <% end %>
+
+  </div>
+
+</div>

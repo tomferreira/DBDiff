@@ -1,0 +1,84 @@
+# encoding: UTF8
+
+databases:
+  - database: DBPD01
+    name: 'Produção (LBV)'
+    adapter: 'ibm_db'
+    host: 10.0.32.97
+    port: 60000
+    username: db2diff
+    password: gSVZi
+
+  - database: DBPD05
+    name: 'Produção (RD)'
+    adapter: 'ibm_db'
+    host: 10.0.32.98
+    port: 60001
+    username: db2diff
+    password: gSVZi
+
+  - database: DBTRN1
+    name: 'Treinamento'
+    adapter: 'ibm_db'
+    host: 10.0.32.98
+    port: 60006
+    username: db2diff
+    password: gSVZi
+
+  - database: DBVLD1
+    name: 'Validação'
+    adapter: 'ibm_db'
+    host: 10.0.32.98
+    port: 60000
+    username: db2diff
+    password: gSVZi
+
+  - database: DBVLD4
+    name: 'Validação (RD)'
+    adapter: 'ibm_db'
+    host: 10.0.32.98
+    port: 60000
+    username: db2diff
+    password: gSVZi
+
+  - database: DBDES1
+    name: 'Desenvolvimento'
+    adapter: 'ibm_db'
+    host: 10.0.32.98
+    port: 60002
+    username: db2diff
+    password: gSVZi
+
+schemas: [GLB, SEG, CCT, CRM, APN, COM, UTL]
+
+comparisons:
+  - database_from: DBPD05
+    database_to: DBPD01
+
+  - database_from: DBTRN1
+    database_to: DBPD01
+
+  - database_from: DBVLD1
+    database_to: DBPD01
+
+  - database_from: DBVLD4
+    database_to: DBPD05
+
+  - database_from: DBVLD4
+    database_to: DBVLD1
+
+  - database_from: DBDES1
+    database_to: DBVLD1
+ 
+tables:
+  - name: glb.glb_dominio
+    comparate: [nme_tabela, nme_coluna, dsc_valor]
+    except: [sqc_dominio]
+
+  - name: crm.crm_rn_termo
+    comparate: [nme_termo]
+    except: [cdg_termo]
+
+  - name: seg.seg_permissao
+    comparate: [cdg_sistema, nme_permissao]
+    except: [cdg_permissao]

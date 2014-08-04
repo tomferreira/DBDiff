@@ -1,0 +1,26 @@
+<ol class="breadcrumb">
+  <li class="active">Home</li>
+</ol>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Comparisons</div>
+
+    <div class="list-group">
+
+    <% @comparisons.each do |comparison| %>
+
+      <a href="<%= comparison_path(comparison) %>" class="list-group-item">
+        <h4 class="list-group-item-heading"><%= comparison.describe %> <span class="label <%= label_class( comparison.result ) %> pull-right"><%= result_name( comparison.result ) %></span></h4>
+        <!--<p class="list-group-item-text pull-right"><small>Since 3 days</small></p>-->
+        <p class="list-group-item-text">Last comparison: <%= I18n.l comparison.created_at, :format => :long %></p>
+      </a>
+
+    <% end %>
+
+    </div>
+
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary">Check now</button>

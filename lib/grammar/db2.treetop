@@ -1,0 +1,16 @@
+
+grammar DB2DDl
+
+  rule document
+    ( statement / comment )*
+  end
+
+  rule statement
+    ( 'create' / 'alter' )
+  end
+
+  rule comment
+    '-'+
+  end
+
+end
