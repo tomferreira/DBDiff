@@ -42,6 +42,8 @@ private
 
         started = Time.now
 
+        puts "Starting check database #{database_config['name']}"
+
         Database.establish_connection( database_config )
 
         verification = Verification.new( :database => database_config['name'], :date => started )
@@ -53,6 +55,7 @@ private
 
             verification.result = true
         rescue => e
+            puts e.message
             verification.error_message = e.message
             verification.result = false
         end

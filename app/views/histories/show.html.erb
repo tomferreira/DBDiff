@@ -30,7 +30,7 @@
       <td class="radiobutton"><%= radio_button_tag(:to, verification.id, :onclick => "$('#version_from_').Attr('checked', true);") if index != @verifications.length-1 %></td>
       <td class="radiobutton"><%= radio_button_tag(:from, verification.id) if index != 0 %></td>
       <td><%= I18n.l verification.date, :format => :long %></td>
-      <td><%= verification.duration %></td>
+      <td><%= distance_of_time_in_words( verification.duration, 0, true ) %></td>
     </tr>
 
     <% end %>

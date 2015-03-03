@@ -15,6 +15,7 @@
 &#8594; 
 Verification <%= link_to @comparison.verification_to.id, verification_path(@comparison.verification_to) %> <i>(<%= @comparison.verification_to.database %>, <%= I18n.l @comparison.verification_to.date, :format => :long %>)</i></p>
 
+<p class="legend"><canvas id="color_from" width="10" height="10"></canvas> Added only in <%= @comparison.verification_from.database %>  <canvas id="color_to" width="10" height="10"></canvas> Added only in <%= @comparison.verification_to.database %></p>
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#structure" data-toggle="tab">Structure</a></li>
@@ -100,3 +101,17 @@ Verification <%= link_to @comparison.verification_to.id, verification_path(@comp
 
   </div>
 </div>
+
+<script type="text/javascript">
+  var canvas_from = document.getElementById('color_from');
+  var context_from = canvas_from.getContext('2d');
+
+  context_from.fillStyle = '#FFC6C6';
+  context_from.fillRect(0, 0, 10, 10);
+
+  var canvas_to = document.getElementById('color_to');
+  var context_to = canvas_to.getContext('2d');
+
+  context_to.fillStyle = '#C6FFC6';
+  context_to.fillRect(0, 0, 10, 10);
+</script>

@@ -8,7 +8,7 @@ class TableDataVersion < ActiveRecord::Base
 
   def records=(records)
 
-    self[:data] = CSV.generate do |csv|
+    self[:data] = CSV.generate(:row_sep => :auto, :col_sep => ";") do |csv|
       csv << records.columns
 
       records.rows.each do |row|
@@ -20,10 +20,9 @@ class TableDataVersion < ActiveRecord::Base
 
   def records
     
-    parse = CSV.parse(self[:data])
+    parse = CSV.parse(self[:data], :row_sep => :auto, :col_sep => ";")
 
     Records.new(parse.first, parse[1..-1])
 
-  end 
-
+  end
 end

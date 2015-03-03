@@ -4,8 +4,8 @@ class CreateComparisons < ActiveRecord::Migration
       t.references :verification_from
       t.references :verification_to
       t.integer :result
-      t.text :structures_diff
-      t.text :tables_diff
+      t.text :structures_diff, :limit => 4294967295
+      t.text :tables_diff, :limit => 4294967295
 
       t.timestamps
     end

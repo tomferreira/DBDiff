@@ -17,10 +17,10 @@ class DB2Helper
 
     @schemas.each do |schema|
 
-      tempfile = Tempfile.new([schema, '.sql'], '/var/www/html/DBDiff/tmp')
+      tempfile = Tempfile.new [schema, '.sql'], Rails.root.join('tmp/')
 
       command = 
-        "/opt/ibm/db2/V9.5/bin/db2look -d #{@database_config['database']} -e -z #{schema} -x -nofed -td #{DELIMITER} -i #{@database_config['username']} -w #{@database_config['password']} -o #{tempfile.path}"
+        "/opt/ibm/db2/V10.1/bin/db2look -d #{@database_config['database']} -e -z #{schema} -x -nofed -td #{DELIMITER} -i #{@database_config['username']} -w #{@database_config['password']} -o #{tempfile.path}"
 
       puts "Executing '#{command}' ..."
 
