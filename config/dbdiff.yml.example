@@ -1,0 +1,29 @@
+# encoding: UTF8
+
+databases:
+  - database: <database1>
+    name: 'Database sample'
+    adapter: 'ibm_db'
+    host: <ip>
+    port: <port>
+    username: <user>
+    password: <password>
+    
+  - database: <database2>
+    name: 'Database sample 2'
+    adapter: 'ibm_db'
+    host: <ip>
+    port: <port>
+    username: <user>
+    password: <password>
+
+schemas: [<schema1>, <schema2>, ...]
+
+comparisons:
+  - database_from: <database1>
+    database_to: <database2>
+ 
+tables:
+  - name: <tablename>
+    comparate: [<column1>, <column2>, ...]
+    except: [<column3>, <column4>, ...]
