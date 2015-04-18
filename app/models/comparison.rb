@@ -3,16 +3,26 @@ class Comparison < ActiveRecord::Base
   belongs_to :verification_to, class_name: "Verification", foreign_key: "verification_to_id"
   attr_accessible :result, :structures_diff, :tables_diff
   
+  before_save :set_databases
+
   serialize :tables_diff
   serialize :structures_diff
 
   def self.latest(database_from, database_to)
     Comparison
-      .joins(:verification_to, :verification_from)
-      .where( verifications: {database: database_to}, verification_froms_comparisons: {database: database_from} ).last 
+      .where( database_from: database_from )
+      .where( database_to: database_to )      
+      .last 
   end
 
   def describe
-    "#{verification_to.database} vs #{verification_from.database}"
+    "#{database_to} vs #{database_from}"
+  end
+
+private
+
+  def set_databases
+    self.database_from = verification_from.database
+    self.database_to = verification_to.database
   end
 end
